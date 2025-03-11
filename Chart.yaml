@@ -1,6 +1,6 @@
 apiVersion: v2
-name: observability
-description: A Helm chart for infra query api
+name: vp-demo
+description: A Helm chart for demo-app
 
 type: application
 

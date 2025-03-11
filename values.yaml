@@ -18,6 +18,6 @@ jaeger:
     agent: 5778
 
 demoApp:
-  image: demo-app:latest
+  image: demo-app:v1
   port: 5000
   otelEndpoint: http://otel-collector:4317
