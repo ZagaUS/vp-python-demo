@@ -1,0 +1,23 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: otel-collector
+spec:
+  ports:
+    - port: {{ .Values.otelCollector.ports.grpc }}
+      targetPort: {{ .Values.otelCollector.ports.grpc }}
+      name: grpc
+    - port: {{ .Values.otelCollector.ports.http }}
+      targetPort: {{ .Values.otelCollector.ports.http }}
+      name: http
+    - port: {{ .Values.otelCollector.ports.logs }}
+      targetPort: {{ .Values.otelCollector.ports.logs }}
+      name: logs
+    - port: {{ .Values.otelCollector.ports.opencensus }}
+      targetPort: {{ .Values.otelCollector.ports.opencensus }}
+      name: opencensus
+    - port: {{ .Values.otelCollector.ports.prometheus }}
+      targetPort: {{ .Values.otelCollector.ports.prometheus }}
+      name: prometheus
+  selector:
+    app: otel-collector

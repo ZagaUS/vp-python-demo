@@ -1,0 +1,23 @@
+replicaCount: 1
+
+otelCollector:
+  image: otel/opentelemetry-collector-contrib:latest
+  configPath: /etc/otel/config.yaml
+  ports:
+    grpc: 4317
+    http: 4318
+    logs: 8000
+    opencensus: 55681
+    prometheus: 9464
+
+jaeger:
+  image: jaegertracing/jaeger:2.3.0
+  ports:
+    ui: 16686
+    zipkin: 9411
+    agent: 5778
+
+demoApp:
+  image: demo-app:latest
+  port: 5000
+  otelEndpoint: http://otel-collector:4317

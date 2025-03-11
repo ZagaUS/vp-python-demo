@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: demo-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: demo-app
+  template:
+    metadata:
+      labels:
+        app: demo-app
+    spec:
+      containers:
+      - name: demo-app
+        image: "{{ .Values.demoApp.image }}"
+        ports:
+        - containerPort: {{ .Values.demoApp.port }}
+        env:
+        - name: OTEL_EXPORTER_OTLP_ENDPOINT
+          value: "{{ .Values.demoApp.otelEndpoint }}"
+        - name: OTEL_RESOURCE_ATTRIBUTES
+          value: "service.name=demo-app"
+        - name: OTEL_SERVICE_NAME
+          value: "demo-app"

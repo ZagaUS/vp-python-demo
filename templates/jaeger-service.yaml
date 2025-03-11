@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: jaeger
+spec:
+  ports:
+    - port: {{ .Values.jaeger.ports.ui }}
+      targetPort: {{ .Values.jaeger.ports.ui }}
+      name: ui
+    - port: {{ .Values.jaeger.ports.zipkin }}
+      targetPort: {{ .Values.jaeger.ports.zipkin }}
+      name: zipkin
+    - port: {{ .Values.jaeger.ports.agent }}
+      targetPort: {{ .Values.jaeger.ports.agent }}
+      name: agent
+  selector:
+    app: jaeger

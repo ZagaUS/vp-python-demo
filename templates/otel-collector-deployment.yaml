@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-otel-collector
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: otel-collector
+  template:
+    metadata:
+      labels:
+        app: otel-collector
+    spec:
+      containers:
+      - name: otel-collector
+        image: "{{ .Values.otelCollector.image }}"
+        args:
+          - "--config={{ .Values.otelCollector.configPath }}"
+        volumeMounts:
+          - name: config-volume
+            mountPath: /etc/otel/
+        ports:
+        - containerPort: {{ .Values.otelCollector.ports.grpc }}
+        - containerPort: {{ .Values.otelCollector.ports.http }}
+        - containerPort: {{ .Values.otelCollector.ports.logs }}
+        - containerPort: {{ .Values.otelCollector.ports.opencensus }}
+        - containerPort: {{ .Values.otelCollector.ports.prometheus }}
+      volumes:
+      - name: config-volume
+        configMap:
+          name: otel-config
